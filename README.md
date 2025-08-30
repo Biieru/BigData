@@ -27,13 +27,13 @@ Este projeto tem como objetivo consumir dados da cotação do dólar diretamente
 - `json`
 
 ## 📁 Estrutura do projeto
-├── resultado.json              # Arquivo JSON gerado pela API
+├── resultado.json            
 
-├── cotacao_dolar_2023_2025.csv # Arquivo CSV final
+├── cotacao_dolar_2023_2025.csv
 
-├── README.md                   # Este arquivo
+├── README.md                  
 
-└── script.py / notebook.ipynb  # Código de extração e transformação dos dados
+└── script.py / notebook.ipynb 
 
 ## 🧾 Resultado esperado
 O arquivo gerado cotacao_dolar_2023_2025.csv contém colunas como:
