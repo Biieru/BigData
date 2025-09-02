@@ -86,4 +86,3 @@ if resposta.status_code == 200:
     df.to_csv(f'cotacao_{moeda}_2023_2025.csv', index=False)
 else:
     print(f"Erro ao acessar API para {moeda}. Status:", resposta.status_code)
-´´´
