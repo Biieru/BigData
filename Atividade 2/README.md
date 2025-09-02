@@ -13,10 +13,6 @@ Este projeto tem como objetivo consumir dados de **cinco moedas estrangeiras** d
 ## Acesso rápido
 
 - 🔍 Google Colab, material de estudo: [Abrir no Colab](https://colab.research.google.com/drive/14f1k1rZvMabKVuy_gvVQ9BruGF_MxN50?usp=sharing)
-- 🌐 API BCB (cotação por data):  
-  [`CotacaoDolarDia`](https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='01-01-2023'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao)
-- 🌐 API BCB (cotação por período):  
-  [`CotacaoDolarPeriodo`](https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='01-01-2023'&@dataFinalCotacao='07-31-2025'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao)
 
 ## Objetivos do projeto
 
