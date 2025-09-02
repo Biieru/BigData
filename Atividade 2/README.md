@@ -40,7 +40,7 @@ Este projeto tem como objetivo consumir dados de **cinco moedas estrangeiras** d
 
 └── script.py / notebook.ipynb # Script ou notebook para coleta e processamento
 
-## 🧾 Resultado esperado
+## Resultado esperado
 
 Cada arquivo `.csv` contém as seguintes colunas:
 
@@ -51,7 +51,7 @@ Cada arquivo `.csv` contém as seguintes colunas:
 - `dataHoraCotacao` — data e hora da cotação
 - `tipoBoletim` — tipo de boletim (ex: "Fechamento")
 
-## 📌 Exemplo de uso
+## Exemplo de uso
 
 ```python
 import pandas as pd
