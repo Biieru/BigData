@@ -12,8 +12,9 @@ Este projeto tem como objetivo consumir dados de **cinco moedas estrangeiras** d
 
 ## Acesso rápido
 
-- 🔍 Google Colab, material de estudo: [Abrir no Colab](https://colab.research.google.com/drive/14f1k1rZvMabKVuy_gvVQ9BruGF_MxN50?usp=sharing)
-
+- Google Colab, material de estudo: [Abrir no Colab](https://colab.research.google.com/drive/14f1k1rZvMabKVuy_gvVQ9BruGF_MxN50?usp=sharing)
+- Recurso Utilizado, pelo [BCB](https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/aplicacao#!/recursos/CotacaoMoedaPeriodo#eyJmb3JtdWxhcmlvIjp7IiRmb3JtYXQiOiJqc29uIiwiJHRvcCI6MTAwfX0=)
+- 
 ## Objetivos do projeto
 
 - Acessar os dados da API PTAX do Banco Central do Brasil
