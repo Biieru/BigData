@@ -1,8 +1,16 @@
-# 📈 Análise da Cotação do Dólar (2023–2025) via API do Banco Central
+# Análise das Cotações de Moedas Estrangeiras (2023–2025) via API do Banco Central
 
-Este projeto tem como objetivo consumir dados da cotação do dólar diretamente da API do Banco Central do Brasil (BCB), referente ao período de **01/01/2023 até 31/07/2025**, transformar os dados em um `DataFrame` com `pandas`, e salvar em um arquivo `.csv`.
+Este projeto tem como objetivo consumir dados de **cinco moedas estrangeiras** diretamente da API do **Banco Central do Brasil (BCB)**, referente ao período de **01/01/2023 até 31/07/2025**. O projeto transforma os dados em `DataFrames` com `pandas`, e salva os resultados em arquivos `.csv`, um para cada moeda.
 
-## 🔗 Acesso rápido
+## Moedas analisadas
+
+- **Iene Japonês (JPY)**
+- **Libra Esterlina (CAD)**
+- **Dólar Americano (USD)**
+- **Franco Suíço (CHF)**
+- **Euro (EUR)**
+
+## Acesso rápido
 
 - 🔍 Google Colab, material de estudo: [Abrir no Colab](https://colab.research.google.com/drive/14f1k1rZvMabKVuy_gvVQ9BruGF_MxN50?usp=sharing)
 - 🌐 API BCB (cotação por data):  
@@ -10,39 +18,42 @@ Este projeto tem como objetivo consumir dados da cotação do dólar diretamente
 - 🌐 API BCB (cotação por período):  
   [`CotacaoDolarPeriodo`](https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='01-01-2023'&@dataFinalCotacao='07-31-2025'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao)
 
-## ✅ Objetivos do projeto
+## Objetivos do projeto
 
-- Acessar os dados da API PTAX do Banco Central
-- Consultar a cotação do dólar no intervalo de 2023 até 2025
-- Selecionar todas as variáveis disponíveis no recurso
-- Converter os dados JSON para um `DataFrame` usando `pandas`
-- Exportar o resultado para um arquivo CSV
-- Tornar o processo reutilizável e automatizável
+- Acessar os dados da API PTAX do Banco Central do Brasil
+- Consultar a cotação de 5 moedas estrangeiras no intervalo de 2023 até 2025
+- Coletar variáveis relevantes: `paridadeCompra`, `paridadeVenda`, `cotacaoCompra`, `cotacaoVenda`, `dataHoraCotacao` e `tipoBoletim`
+- Converter os dados JSON para `DataFrames` usando `pandas`
+- Exportar os resultados para arquivos `.csv` organizados por moeda
+- Automatizar e modularizar o processo
 
-## ⚙️ Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - `Python`
 - `pandas`
 - `requests`
 - `json`
 
-## 📁 Estrutura do projeto
-├── resultado.json            
+## Estrutura do projeto
 
-├── cotacao_dolar_2023_2025.csv
+├── resultado_<MOEDA>.json # Dados brutos em JSON para cada moeda
 
-├── README.md                  
+├── cotacao_<MOEDA>_2023_2025.csv # Arquivos CSV com as cotações de cada moeda
 
-└── script.py / notebook.ipynb 
+├── README.md # Este arquivo
+
+└── script.py / notebook.ipynb # Script ou notebook para coleta e processamento
 
 ## 🧾 Resultado esperado
-O arquivo gerado cotacao_dolar_2023_2025.csv contém colunas como:
 
-cotacaoCompra — valor da cotação de compra
+Cada arquivo `.csv` contém as seguintes colunas:
 
-cotacaoVenda — valor da cotação de venda
-
-dataHoraCotacao — data e hora da cotação ##
+- `paridadeCompra` — paridade de compra
+- `paridadeVenda` — paridade de venda
+- `cotacaoCompra` — valor da cotação de compra
+- `cotacaoVenda` — valor da cotação de venda
+- `dataHoraCotacao` — data e hora da cotação
+- `tipoBoletim` — tipo de boletim (ex: "Fechamento")
 
 ## 📌 Exemplo de uso
 
@@ -51,30 +62,28 @@ import pandas as pd
 import requests
 import json
 
-# URL da API para o período completo
-url = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/" \
-      "CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?" \
-      "@dataInicial='01-01-2023'&@dataFinalCotacao='07-31-2025'" \
-      "&$top=10000&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao"
+# Moeda e intervalo de datas
+moeda = "USD"  # Pode ser 'USD', 'EUR', 'JPY', 'GBP', 'CHF'
+data_inicial = "01-01-2023"
+data_final = "07-31-2025"
 
-# Função para realizar requisição à API e salvar JSON
-def requisicao_api(link):
-    resposta = requests.get(link)
-    if resposta.status_code == 200:
-        dados = resposta.json()
-        print('Status Code:', resposta.status_code)
-        with open('resultado.json', 'w', encoding='utf-8') as arquivo:
-            json.dump(dados, arquivo, ensure_ascii=False, indent=4)
-    else:
-        print('Erro ao acessar API. Status Code:', resposta.status_code)
+# URL da API para a moeda desejada
+url = f"https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/" \
+      f"CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?" \
+      f"@moeda='{moeda}'&@dataInicial='{data_inicial}'&@dataFinalCotacao='{data_final}'" \
+      f"&$top=10000&$format=json&" \
+      f"$select=paridadeCompra,paridadeVenda,cotacaoCompra,cotacaoVenda,dataHoraCotacao,tipoBoletim"
 
-# Chamada da função
-requisicao_api(url)
+# Requisição à API
+resposta = requests.get(url)
+if resposta.status_code == 200:
+    dados = resposta.json()
+    with open(f'resultado_{moeda}.json', 'w', encoding='utf-8') as arquivo:
+        json.dump(dados, arquivo, ensure_ascii=False, indent=4)
 
-# Leitura e transformação dos dados
-jsondata = pd.read_json('resultado.json')
-data = jsondata['value']
-dados_df = pd.json_normalize(data)
-
-# Exportar para CSV
-dados_df.to_csv('cotacao_dolar_2023_2025.csv', index=False)
+    # Processamento dos dados
+    df = pd.json_normalize(dados['value'])
+    df.to_csv(f'cotacao_{moeda}_2023_2025.csv', index=False)
+else:
+    print(f"Erro ao acessar API para {moeda}. Status:", resposta.status_code)
+´´´
